@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="my_dokan">আমার দোকান</string>
+    <string name="pick_date">Pick date</string>
+    <string name="dismiss">Dismiss</string>
+    <string name="done">Done</string>
+    <string name="back">Back</string>
+    <string name="home">Home</string>
+    <string name="continues">Continues</string>
+
+    <string name="today_report">আজকের হিসাব</string>
+    <string name="this_month_report">মাসের হিসাব</string>
+
+    <string name="day">দিন</string>
+    <string name="week">সপ্তাহ</string>
+    <string name="month">মাস</string>
+    <string name="year">বছর</string>
+
+    <string name="sell">বিক্রয়</string>
+    <string name="quick_sell">দ্রুত বিক্রি</string>
+    <string name="product_sell">পণ্য বিক্রি</string>
+
+    <string name="do_sell">বেচা</string>
+
+    <string name="due">বাকি</string>
+    <string name="total_due">মোট বাকি</string>
+    <string name="past_due">পূর্বের বাকি</string>
+    <string name="customer_past_due">পূর্বের বাকি (কাস্টমারের কাছে পাবেন)</string>
+    <string name="supplier_past_due">পূর্বের বাকি (সাপ্লায়রকে দিবেন)</string>
+    <string name="due_purchase_error">বাকিতে কেনার জন্য সাপ্লায়ার সিলেক্ট করুন</string>
+    <string name="please_select_product">পণ্য সিলেক্ট করুন</string>
+    <string name="due_sell_error">বাকিতে বিক্রির জন্য সাপ্লায়ার সিলেক্ট করুন</string>
+
+    <string name="profit">লাভ</string>
+    <string name="payment">পরিশোধ</string>
+    <string name="cash">নগদ</string>
+    <string name="purchase">কেনা</string>
+    <string name="do_purchase">কেনা</string>
+
+    <string name="transaction_list">লেনদেন</string>
+
+    <string name="due_receive">বাকি পেয়েছি</string>
+    <string name="due_given">বাকি দিয়েছি</string>
+    <string name="due_payment">বাকি পরিশোধ</string>
+    <string name="supplier_due_taken">বাকি নিয়েছি</string>
+    <string name="new_due">নতুন বাকি</string>
+    <string name="received">জমা </string>
+
+    <string name="stock_count">স্টক সংখ্যা</string>
+    <string name="stock_amount">স্টক মূল্য</string>
+
+    <string name="purchase_book">কেনার খাতা</string>
+    <string name="sell_book">বেচার খাতা</string>
+
+    <string name="give_due">বাকি দিন</string>
+    <string name="take_due">বাকি নিন</string>
+
+    <string name="purchase_price">ক্রয় মূল্য </string>
+    <string name="sell_price">বিক্রয় মূল্য </string>
+    <string name="stock">মজুদ </string>
+    <string name="current_stock">বর্তমান মজুদ </string>
+    <string name="qty">পরিমাণ</string>
+
+    <string name="product">পণ্য</string>
+    <string name="product_search">পণ্য সার্চ করুন</string>
+    <string name="product_list">পণ্য তালিকা</string>
+    <string name="product_name">পণ্যের নাম </string>
+    <string name="product_purchase_price">পন্যের ক্রয়মূল্য</string>
+    <string name="product_sell_price">খুচরা মূল্য </string>
+    <string name="product_delete">পণ্য ডিলিট</string>
+    <string name="product_edit">পণ্য এডিট</string>
+    <string name="product_add">পণ্য যোগ করা</string>
+    <string name="total_product">মোট পণ্য</string>
+
+    <string name="total_customer">মোট কাস্টমার</string>
+    <string name="customer">কাস্টমার</string>
+    <string name="customer_name">কাস্টমারের নাম</string>
+    <string name="customer_add">কাস্টমার যোগ করা</string>
+    <string name="customer_edit">কাস্টমার এডিট</string>
+    <string name="customer_select">কাস্টমার সিলেক্ট করুন</string>
+    <string name="supplier_select">সাপ্লায়ার সিলেক্ট করুন</string>
+
+    <string name="total_supplier">মোট সাপ্লায়ার</string>
+    <string name="supplier">সাপ্লায়ার</string>
+    <string name="supplier_add">সাপ্লাইয়ার যোগ করা</string>
+    <string name="supplier_name">সাপ্লাইয়ার নাম</string>
+    <string name="supplier_edit">সাপ্লাইয়ার এডিট</string>
+
+    <string name="details">বিস্তারিত</string>
+    <string name="delete">ডিলিট</string>
+    <string name="phone_call">কল করুন</string>
+    <string name="send_message">মেসেজ পাঠান</string>
+    <string name="your_due">আপনার বাকি</string>
+
+    <string name="edit">এডিট</string>
+    <string name="note">নোট</string>
+    <string name="note_with_colon">নোটঃ- </string>
+    <string name="remain_due">অবশিষ্ট বাকি </string>
+    <string name="customer_name_not_given">কাস্টমারের নাম: [দেওয়া হয়নি]</string>
+    <string name="supplier_name_not_given">সাপ্লাইয়ার নাম: [দেওয়া হয়নি]</string>
+    <string name="name_not_given">নাম: [দেওয়া হয়নি]</string>
+    <string name="total_taka">মোট টাকা</string>
+    <string name="taka">টাকা</string>
+    <string name="address">ঠিকানা</string>
+    <string name="mobile_no">মোবাইল নং.</string>
+    <string name="save">সেভ করুন</string>
+    <string name="update">আপডেট</string>
+    <string name="search_by_name_number">নাম/মোবাইল দিয়ে সার্চ করুন</string>
+    <string name="search">সার্চ</string>
+</resources>
