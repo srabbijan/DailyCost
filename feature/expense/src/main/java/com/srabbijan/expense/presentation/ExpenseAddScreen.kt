@@ -1,10 +1,8 @@
 package com.srabbijan.expense.presentation
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.Scaffold
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -13,6 +11,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.lifecycle.flowWithLifecycle
 import androidx.navigation.NavHostController
 import com.srabbijan.common.navigation.NavigationRoute
+import com.srabbijan.common.utils.TransactionType
 import com.srabbijan.design.AppToolbarWithBack
 import com.srabbijan.design.InputTextField
 import com.srabbijan.design.PrimaryButton
@@ -30,11 +29,11 @@ fun ExpenseAddScreen(
     val context = LocalContext.current
     val lifecycleOwner = androidx.lifecycle.compose.LocalLifecycleOwner.current
 
-/*    LaunchedEffect(key1 = true) {
-        expenseId?.let {
-            viewModel.onEvent(ExpenseAdd.Event.FetchCustomerById(it))
-        }
-    }*/
+    /*    LaunchedEffect(key1 = true) {
+            expenseId?.let {
+                viewModel.onEvent(ExpenseAdd.Event.FetchCustomerById(it))
+            }
+        }*/
     LaunchedEffect(key1 = viewModel.navigation) {
         viewModel.navigation.flowWithLifecycle(lifecycleOwner.lifecycle)
             .collectLatest {
@@ -80,6 +79,33 @@ fun ExpenseAddScreen(
                 .padding(innerPadding),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+
+            var selectedIndex by remember { mutableStateOf(0) }
+            val options = listOf("Cash Out", "Cash In")
+            SingleChoiceSegmentedButtonRow {
+                options.forEachIndexed { index, label ->
+                    SegmentedButton(
+                        shape = SegmentedButtonDefaults.itemShape(index = index, count = options.size),
+                        onClick = {
+                            selectedIndex = index
+
+                            when (index) {
+                                0 -> {
+                                    viewModel.onEvent(ExpenseAdd.Event.Type(TransactionType.CASH_OUT.value))
+                                }
+
+                                1 -> {
+                                   viewModel.onEvent(ExpenseAdd.Event.Type(TransactionType.CASH_IN.value))
+                                }
+                            }
+                        },
+
+                        selected = index == selectedIndex
+                    ) {
+                        Text(label)
+                    }
+                }
+            }
             InputTextField(
                 initialValue = uiState.value.amount,
                 placeholder = "Tk",
@@ -92,7 +118,7 @@ fun ExpenseAddScreen(
 
 
 
-            PrimaryButton (
+            PrimaryButton(
                 label = if (expenseId == null) stringResource(R.string.save) else stringResource(R.string.update)
             ) {
                 if (expenseId == null)

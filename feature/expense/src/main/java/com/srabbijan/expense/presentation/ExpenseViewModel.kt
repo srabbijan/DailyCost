@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.srabbijan.common.utils.Status
 import com.srabbijan.common.utils.TransactionType
 import com.srabbijan.common.utils.UiText
+import com.srabbijan.common.utils.logDebug
 import com.srabbijan.expense.domain.model.ExpenseRequest
 import com.srabbijan.expense.domain.useCase.ExpenseUseCase
 import kotlinx.coroutines.Dispatchers
@@ -40,10 +41,13 @@ class ExpenseViewModel(
                 _uiState.value = _uiState.value.copy(amount = event.value)
             }
 
-            ExpenseAdd.Event.GoToBack -> {
+            is ExpenseAdd.Event.GoToBack -> {
                 viewModelScope.launch {
                     _navigation.send(ExpenseAdd.Navigation.GoToBack)
                 }
+            }
+            is ExpenseAdd.Event.Type ->{
+                _uiState.value = _uiState.value.copy(type = event.value)
             }
         }
     }
@@ -62,7 +66,7 @@ class ExpenseViewModel(
 
     private fun insert() {
         val request = ExpenseRequest(
-            type = TransactionType.CASH_OUT.value,
+            type = uiState.value.type,
             amount = uiState.value.amount.toDouble(),
             description = null,
             categoryId = null,
@@ -97,8 +101,9 @@ object ExpenseAdd {
         val error: UiText = UiText.Idle,
         var isAddCompleted: Boolean = false,
 
-        var amount: String = "",
+        val amount: String = "",
         val amountError: UiText? = null,
+        val type:String = TransactionType.CASH_OUT.value
 
         )
 
@@ -112,6 +117,7 @@ object ExpenseAdd {
         data object Insert : Event
         data object Update : Event
         data class Amount(val value: String) : Event
+        data class Type(val value: String):Event
     }
 
 }
