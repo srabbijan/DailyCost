@@ -13,8 +13,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.srabbijan.design.theme.APP_DEFAULT_COLOR_LIGHT
-import com.srabbijan.design.theme.ColorDisable
+import com.srabbijan.design.theme.AppTheme
 import com.srabbijan.design.utils.r
 import com.srabbijan.design.utils.ssp
 
@@ -31,7 +30,7 @@ fun AppDateIntervalView(
             .fillMaxWidth()
             .padding(8.dp)
             .clip(RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp, bottomEnd = 8.dp, bottomStart = 8.dp))
-            .background(APP_DEFAULT_COLOR_LIGHT)
+            .background(AppTheme.colorScheme.background)
     ) {
 
         Row(
@@ -63,7 +62,7 @@ fun AppDateIntervalView(
                 Icon(
                     painter = painterResource(R.drawable.ic_angle_right),
                     contentDescription = null,
-                    tint = if (offset < 0) Color.Black else ColorDisable
+                    tint = if (offset < 0) Color.Black else Color.LightGray
                 )
             }
         }

@@ -7,10 +7,10 @@ plugins {
 
 android {
     namespace = "com.srabbijan.dashboard"
-    compileSdk = 34
+    compileSdk = libs.versions.target.sdk.version.get().toInt()
 
     defaultConfig {
-        minSdk = 24
+        minSdk = libs.versions.min.sdk.version.get().toInt()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")

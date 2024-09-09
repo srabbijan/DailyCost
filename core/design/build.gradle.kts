@@ -6,10 +6,10 @@ plugins {
 
 android {
     namespace = "com.srabbijan.design"
-    compileSdk = 34
+    compileSdk = libs.versions.target.sdk.version.get().toInt()
 
     defaultConfig {
-        minSdk = 24
+        minSdk = libs.versions.min.sdk.version.get().toInt()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -35,6 +35,7 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
+    implementation(libs.androidx.ui.tooling.preview.android)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

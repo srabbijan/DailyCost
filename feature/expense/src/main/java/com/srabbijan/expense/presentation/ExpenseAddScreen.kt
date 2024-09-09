@@ -13,9 +13,9 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.lifecycle.flowWithLifecycle
 import androidx.navigation.NavHostController
 import com.srabbijan.common.navigation.NavigationRoute
-import com.srabbijan.design.AppActionButton
 import com.srabbijan.design.AppToolbarWithBack
 import com.srabbijan.design.InputTextField
+import com.srabbijan.design.PrimaryButton
 import com.srabbijan.design.R
 import kotlinx.coroutines.flow.collectLatest
 
@@ -92,9 +92,8 @@ fun ExpenseAddScreen(
 
 
 
-            AppActionButton(
-                isLoading = uiState.value.isLoading,
-                btnName = if (expenseId == null) stringResource(R.string.save) else stringResource(R.string.update)
+            PrimaryButton (
+                label = if (expenseId == null) stringResource(R.string.save) else stringResource(R.string.update)
             ) {
                 if (expenseId == null)
                     viewModel.onEvent(ExpenseAdd.Event.Insert)

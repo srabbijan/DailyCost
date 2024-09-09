@@ -7,6 +7,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardColors
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,12 +28,9 @@ import com.srabbijan.common.navigation.NavigationRoute
 import com.srabbijan.common.utils.TransactionType
 import com.srabbijan.common.utils.UiText
 import com.srabbijan.common.utils.toCurrencyFormat
-import com.srabbijan.design.AppActionButton
 import com.srabbijan.design.AppDateIntervalView
-import com.srabbijan.design.loadingDialog
-import com.srabbijan.design.theme.ColorDisable
-import com.srabbijan.design.theme.ColorError
-import com.srabbijan.design.theme.ColorSuccess
+import com.srabbijan.design.LoadingDialog
+import com.srabbijan.design.PrimaryButton
 import com.srabbijan.design.utils.r
 import kotlinx.coroutines.flow.collectLatest
 
@@ -85,7 +83,7 @@ fun DashboardScreen(
     ) { innerPadding ->
 
         if (uiState.value.isLoading) {
-            loadingDialog { }
+            LoadingDialog { }
         }
 
         if (uiState.value.error !is UiText.Idle) {
@@ -145,7 +143,7 @@ fun DashboardScreen(
             }
 
             Box {
-                val brush = Brush.verticalGradient(listOf(Color.Transparent, ColorDisable))
+                val brush = Brush.verticalGradient(listOf(Color.Transparent, Color.LightGray))
                 Canvas(
                     modifier = Modifier.fillMaxWidth()
                         .height(24.dp),
@@ -162,7 +160,7 @@ fun DashboardScreen(
                     colors = CardColors(
                         contentColor = Color.Black,
                         containerColor = Color.White,
-                        disabledContainerColor = ColorDisable,
+                        disabledContainerColor = Color.LightGray,
                         disabledContentColor = Color.Black
                     ),
                     shape = RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp)
@@ -172,18 +170,15 @@ fun DashboardScreen(
                             .padding(12.dp),
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        AppActionButton(
-                            btnName = "Cash In",
-                            bgColor = ColorSuccess,
-                            textColor = Color.White,
+                        PrimaryButton (
+                            label = "Cash In",
                             modifier = Modifier.weight(1f),
                         ) {
                             viewModel.onEvent(event = Dashboard.Event.AddIncome)
                         }
-                        AppActionButton(
-                            btnName = "Cash Out",
-                            bgColor = ColorError,
-                            textColor = Color.White,
+                        Spacer(modifier = Modifier.width(8.dp))
+                        PrimaryButton (
+                            label = "Cash Out",
                             modifier = Modifier.weight(1f),
                         ) {
                             viewModel.onEvent(event = Dashboard.Event.AddExpense)

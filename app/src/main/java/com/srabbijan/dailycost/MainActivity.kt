@@ -6,7 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import com.srabbijan.dailycost.navigation.AppNavigation
 import com.srabbijan.dailycost.navigation.NavigationSubGraphs
-import com.srabbijan.dailycost.ui.theme.DailyCostTheme
+import com.srabbijan.design.theme.AppTheme
 import org.koin.android.ext.android.inject
 
 class MainActivity : ComponentActivity() {
@@ -15,7 +15,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            DailyCostTheme {
+            AppTheme {
                 AppNavigation(navigationSubGraphs = navigationSubGraphs)
             }
         }

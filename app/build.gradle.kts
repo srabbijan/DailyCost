@@ -8,14 +8,14 @@ plugins {
 
 android {
     namespace = "com.srabbijan.dailycost"
-    compileSdk = 34
+    compileSdk = libs.versions.target.sdk.version.get().toInt()
 
     defaultConfig {
         applicationId = "com.srabbijan.dailycost"
-        minSdk = 24
-        targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
+        minSdk = libs.versions.min.sdk.version.get().toInt()
+        targetSdk = libs.versions.target.sdk.version.get().toInt()
+        versionCode = libs.versions.version.code.get().toInt()
+        versionName = libs.versions.version.name.get()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -40,7 +40,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion = libs.versions.kotlin.compiler.extension.version.get()
     }
     packaging {
         resources {
@@ -51,6 +51,7 @@ android {
 
 dependencies {
     implementation(project(":core:common"))
+    implementation(project(":core:design"))
     implementation(project(":core:database"))
     implementation(project(":feature:dashboard"))
     implementation(project(":feature:expense"))

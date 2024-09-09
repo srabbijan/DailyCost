@@ -20,6 +20,7 @@
             <option value="$PROJECT_DIR$/feature/expense" />
           </set>
         </option>
+        <option name="resolveExternalAnnotations" value="false" />
       </GradleProjectSettings>
     </option>
   </component>
