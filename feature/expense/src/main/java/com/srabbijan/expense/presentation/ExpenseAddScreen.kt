@@ -57,7 +57,7 @@ fun ExpenseAddScreen(
             .fillMaxSize(),
         topBar = {
             AppToolbarWithBack(
-                title = if (expenseId == null) stringResource(R.string.customer_add) else stringResource(R.string.customer_edit)
+                label = if (expenseId == null) "Add new" else "Edit"
             ) {
                 viewModel.onEvent(ExpenseAdd.Event.GoToBack)
             }
@@ -80,8 +80,9 @@ fun ExpenseAddScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            var selectedIndex by remember { mutableStateOf(0) }
+            var selectedIndex by remember { mutableIntStateOf(0) }
             val options = listOf("Cash Out", "Cash In")
+
             SingleChoiceSegmentedButtonRow {
                 options.forEachIndexed { index, label ->
                     SegmentedButton(
@@ -106,6 +107,7 @@ fun ExpenseAddScreen(
                     }
                 }
             }
+
             InputTextField(
                 initialValue = uiState.value.amount,
                 placeholder = "Tk",
@@ -115,8 +117,6 @@ fun ExpenseAddScreen(
             ) {
                 viewModel.onEvent(ExpenseAdd.Event.Amount(it))
             }
-
-
 
             PrimaryButton(
                 label = if (expenseId == null) stringResource(R.string.save) else stringResource(R.string.update)

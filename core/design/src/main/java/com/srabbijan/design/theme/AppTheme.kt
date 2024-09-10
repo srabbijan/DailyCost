@@ -6,32 +6,37 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 private val darkColorScheme = AppColorScheme(
-    background = Color.Black,
-    onBackground = Purple80,
-    primary = PurpleGrey40,
-    onPrimary = PurpleGrey80,
-    secondary = Pink40,
-    onSecondary = Pink80,
-    separator = LightGray,
-    error = DarkRed
+    background = onBackground,
+    onBackground = background,
+    primary = onPrimary,
+    onPrimary = primary,
+    primaryContainer = onPrimaryContainer,
+    onPrimaryContainer = primaryContainer,
+    secondary = onSecondary,
+    onSecondary = secondary,
+    separator = outline,
+    error = onError,
+    onError = error
 )
 
 private val lightColorScheme = AppColorScheme(
-    background = Color.White,
-    onBackground = Purple40,
-    primary = PurpleGrey80,
-    onPrimary = PurpleGrey40,
-    secondary = Pink80,
-    onSecondary = Pink40,
-    separator = DarkGray,
-    error = LightRed
+    background = background,
+    onBackground = onBackground,
+    primary = primary,
+    onPrimary = onPrimary,
+    primaryContainer = primaryContainer,
+    onPrimaryContainer = onPrimaryContainer,
+    secondary = secondary,
+    onSecondary = onSecondary,
+    separator = outline,
+    error = error,
+    onError = onError
 )
 
 private val typography = AppTypography(

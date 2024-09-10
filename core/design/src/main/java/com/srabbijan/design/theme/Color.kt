@@ -1,20 +1,22 @@
 package com.srabbijan.design.theme
 
-import androidx.compose.material3.CardColors
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 
 
-val LightGray = Color(0xFFB9B8B8)
-val DarkGray = Color(0xFF8A8A8A)
+val primary = Color(0xFF6750A4)
+val onPrimary = Color(0xFFFFFFFF)
+val primaryContainer = Color(0xFFEADDFF)
+val onPrimaryContainer = Color(0xFF4F378B)
 
-val Purple80 = Color(0xFFD0BCFF)
-val PurpleGrey80 = Color(0xFFCCC2DC)
-val Pink80 = Color(0xFFEFB8C8)
+val secondary = Color(0xFF625B71)
+val onSecondary = Color(0xFFFFFFFF)
 
-val Purple40 = Color(0xFF6650a4)
-val PurpleGrey40 = Color(0xFF625b71)
-val Pink40 = Color(0xFF7D5260)
+val error = Color(0xFFB3261E)
+val onError = Color(0xFFFFFFFF)
+val errorContainer = Color(0xFFF9DEDC)
+val onErrorContainer = Color(0xFF8C1D18)
 
-val LightRed = Color(0xFFFF1744)
-val DarkRed = Color(0xFFFF3D00)
+val background = Color(0xFFFEF7FF)
+val onBackground = Color(0xFF1D1B20)
+
+val outline = Color(0xFF79747E)

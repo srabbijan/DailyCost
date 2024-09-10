@@ -1,13 +1,30 @@
 package com.srabbijan.dashboard.presentation
 
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.outlined.Receipt
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardColors
-import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,8 +46,12 @@ import com.srabbijan.common.utils.TransactionType
 import com.srabbijan.common.utils.UiText
 import com.srabbijan.common.utils.toCurrencyFormat
 import com.srabbijan.design.AppDateIntervalView
+import com.srabbijan.design.AppNavigationBar
+import com.srabbijan.design.AppNavigationItem
+import com.srabbijan.design.AppToolbarHome
 import com.srabbijan.design.LoadingDialog
 import com.srabbijan.design.PrimaryButton
+import com.srabbijan.design.theme.AppTheme
 import com.srabbijan.design.utils.r
 import kotlinx.coroutines.flow.collectLatest
 
@@ -52,6 +73,7 @@ fun DashboardScreen(
                     Dashboard.Navigation.GoToAddIncome -> {
                         navHostController.navigate(NavigationRoute.ExpenseAdd(TransactionType.CASH_IN.value))
                     }
+
                     Dashboard.Navigation.GoToAddExpense -> {
                         navHostController.navigate(NavigationRoute.ExpenseAdd(TransactionType.CASH_OUT.value))
                     }
@@ -79,7 +101,31 @@ fun DashboardScreen(
         modifier = Modifier
             .windowInsetsPadding(WindowInsets.safeDrawing)
             .fillMaxSize(),
-//        topBar = { AppToolbarHome {} }
+        containerColor = AppTheme.colorScheme.background,
+        topBar = { AppToolbarHome() },
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = { },
+            ) {
+                Icon(Icons.Filled.Add, "Floating action button.")
+            }
+        },
+        bottomBar = {
+            AppNavigationBar(
+                listOf(
+                    AppNavigationItem(
+                        label = "Home",
+                        icon = Icons.Outlined.Home,
+                        route = NavigationRoute.Home
+                    ),
+                    AppNavigationItem(
+                        label = "Report",
+                        icon = Icons.Outlined.Receipt,
+                        route = NavigationRoute.Report
+                    )
+                )
+            ) { }
+        }
     ) { innerPadding ->
 
         if (uiState.value.isLoading) {
@@ -106,7 +152,7 @@ fun DashboardScreen(
                 onPrevious = {
                     viewModel.onEvent(Dashboard.Event.PreInterval)
                 }
-            ){
+            ) {
                 uiState.value.summaryData?.let { data ->
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally
@@ -134,7 +180,7 @@ fun DashboardScreen(
 
             Spacer(modifier = Modifier.height(12.r()))
             // Dokan Feature
-            LazyColumn (
+            LazyColumn(
                 modifier = Modifier.weight(1f),
             ) {
                 items(uiState.value.expenseList) { data ->
@@ -142,10 +188,12 @@ fun DashboardScreen(
                 }
             }
 
+
             Box {
                 val brush = Brush.verticalGradient(listOf(Color.Transparent, Color.LightGray))
                 Canvas(
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier
+                        .fillMaxWidth()
                         .height(24.dp),
                     onDraw = {
                         drawRoundRect(
@@ -166,18 +214,19 @@ fun DashboardScreen(
                     shape = RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp)
                 ) {
                     Row(
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier
+                            .fillMaxWidth()
                             .padding(12.dp),
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        PrimaryButton (
+                        PrimaryButton(
                             label = "Cash In",
                             modifier = Modifier.weight(1f),
                         ) {
                             viewModel.onEvent(event = Dashboard.Event.AddIncome)
                         }
                         Spacer(modifier = Modifier.width(8.dp))
-                        PrimaryButton (
+                        PrimaryButton(
                             label = "Cash Out",
                             modifier = Modifier.weight(1f),
                         ) {
@@ -185,6 +234,8 @@ fun DashboardScreen(
                         }
                     }
                 }
+
+
             }
         }
     }

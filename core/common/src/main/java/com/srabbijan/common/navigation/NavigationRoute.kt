@@ -9,6 +9,12 @@ sealed class NavigationRoute {
     data object Dashboard : NavigationRoute()
 
     @Serializable
+    data object Home : NavigationRoute()
+
+    @Serializable
+    data object Report : NavigationRoute()
+
+    @Serializable
     data object Expense : NavigationRoute()
 
     @Serializable
