@@ -21,7 +21,6 @@ import kotlinx.coroutines.flow.collectLatest
 @Composable
 fun ExpenseAddScreen(
     expenseId: String? = null,
-    type: String? = null,
     viewModel: ExpenseViewModel,
     navHostController: NavHostController
 ) {

@@ -1,6 +1,5 @@
 package com.srabbijan.common.navigation
 
-import com.srabbijan.common.utils.TransactionType
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -15,12 +14,13 @@ sealed class NavigationRoute {
     data object Report : NavigationRoute()
 
     @Serializable
+    data object Settings : NavigationRoute()
+
+    @Serializable
     data object Expense : NavigationRoute()
 
     @Serializable
-    data class ExpenseAdd(
-        val type: String = TransactionType.CASH_OUT.value,
-    ) : NavigationRoute()
+    data object ExpenseAdd : NavigationRoute()
 
     @Serializable
     data object Category : NavigationRoute()

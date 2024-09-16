@@ -8,6 +8,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -37,15 +38,16 @@ fun AppDateIntervalView(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(vertical = 8.dp),
-            horizontalArrangement = Arrangement.SpaceAround
+            horizontalArrangement = Arrangement.SpaceAround,
+            verticalAlignment = Alignment.CenterVertically
         ) {
             IconButton(
-                modifier = Modifier.size(25.r()),
                 onClick = {
                     onPrevious()
                 }
             ) {
                 Icon(
+                    modifier = Modifier.size(30.dp),
                     painter = painterResource(R.drawable.ic_angle_left),
                     contentDescription = null,
                 )
@@ -54,12 +56,12 @@ fun AppDateIntervalView(
             Text(text = showingDate, color = Color.Black, fontSize = 18.ssp())
 
             IconButton(
-                modifier = Modifier.size(25.r()),
                 onClick = {
                     if (offset < 0) onNext()
                 }
             ) {
                 Icon(
+                    modifier = Modifier.size(30.dp),
                     painter = painterResource(R.drawable.ic_angle_right),
                     contentDescription = null,
                     tint = if (offset < 0) Color.Black else Color.LightGray

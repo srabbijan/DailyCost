@@ -18,14 +18,11 @@ class ExpenseFeatureApiImpl : ExpenseFeatureApi {
         navHostController: NavHostController
     ) {
         navGraphBuilder.navigation<NavigationRoute.Expense>(
-            startDestination = NavigationRoute.ExpenseAdd()
+            startDestination = NavigationRoute.ExpenseAdd
         ) {
             composable<NavigationRoute.ExpenseAdd> {
-                val arg = it.toRoute<NavigationRoute.ExpenseAdd>()
-                val type = arg.type
                 val viewModel: ExpenseViewModel = koinViewModel()
                 ExpenseAddScreen(
-                    type = type,
                     viewModel = viewModel,
                     navHostController = navHostController
                 )

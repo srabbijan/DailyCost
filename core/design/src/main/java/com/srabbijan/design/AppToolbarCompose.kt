@@ -1,5 +1,6 @@
 package com.srabbijan.design
 
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBackIos
 import androidx.compose.material.icons.automirrored.outlined.MenuBook
@@ -18,6 +19,7 @@ import com.srabbijan.design.theme.AppTheme
 @Composable
 fun AppToolbarWithBack(
     label: String,
+    actions: @Composable (RowScope.() -> Unit)? = null,
     onClick: () -> Unit,
 ) {
     TopAppBar(
@@ -41,7 +43,7 @@ fun AppToolbarWithBack(
             }
         },
         actions = {
-
+            actions?.invoke(this)
         },
     )
 }
@@ -50,8 +52,10 @@ fun AppToolbarWithBack(
 @Composable
 fun AppToolbarHome(
     label: String = "Daily Cost",
+    navigationIcon: @Composable (() -> Unit)? = null,
+    actions: @Composable (RowScope.() -> Unit)? = null,
 ) {
-    CenterAlignedTopAppBar(
+    TopAppBar(
         colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
             containerColor = AppTheme.colorScheme.primaryContainer,
             titleContentColor = AppTheme.colorScheme.primary,
@@ -65,13 +69,11 @@ fun AppToolbarHome(
             )
         },
         navigationIcon = {
-            IconButton(onClick = { }) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Outlined.MenuBook,
-                    contentDescription = "Localized description"
-                )
-            }
+            navigationIcon?.invoke()
         },
+        actions = {
+            actions?.invoke(this)
+        }
     )
 }
 

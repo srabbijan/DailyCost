@@ -15,7 +15,7 @@ import com.srabbijan.common.navigation.NavigationRoute
 @Composable
 fun AppNavigationBar(
     items: List<AppNavigationItem>,
-    onClick: (NavigationRoute) -> Unit,
+    onClick: (Int) -> Unit,
 ) {
     var selectedItem by remember { mutableIntStateOf(0) }
 
@@ -34,7 +34,7 @@ fun AppNavigationBar(
                 selected = selectedItem == index,
                 onClick = {
                     selectedItem = index
-                    onClick(item.route)
+                    onClick(index)
                 }
             )
         }
