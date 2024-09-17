@@ -6,12 +6,10 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 private val darkColorScheme = AppColorScheme(
     background = onBackground,
@@ -49,24 +47,27 @@ private val typography = AppTypography(
     ),
     titleNormal = TextStyle(
         fontFamily = roboto,
-        fontWeight = FontWeight.Bold,
+        fontWeight = FontWeight.SemiBold,
         fontSize = 20.sp
     ),
     paragraph = TextStyle(
         fontFamily = roboto,
+        fontWeight = FontWeight.Normal,
         fontSize = 16.sp
     ),
     labelLarge = TextStyle(
         fontFamily = roboto,
-        fontWeight = FontWeight.SemiBold,
+        fontWeight = FontWeight.Medium,
         fontSize = 16.sp
     ),
     labelNormal = TextStyle(
         fontFamily = roboto,
+        fontWeight = FontWeight.Normal,
         fontSize = 14.sp
     ),
     labelSmall = TextStyle(
         fontFamily = roboto,
+        fontWeight = FontWeight.Light,
         fontSize = 12.sp
     )
 )

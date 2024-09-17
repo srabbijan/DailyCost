@@ -1,14 +1,14 @@
 package com.srabbijan.dashboard.data
 
 import com.srabbijan.common.utils.TransactionType
-import com.srabbijan.dashboard.domain.DashboardRepository
+import com.srabbijan.dashboard.domain.HomeRepository
 import com.srabbijan.dashboard.domain.model.SummaryModel
 import com.srabbijan.database.dao.ExpenseDao
 import com.srabbijan.database.dto.ExpenseModel
 
-class DashboardRepositoryImpl(
+class HomeRepositoryImpl(
     private val expenseDao: ExpenseDao
-) : DashboardRepository {
+) : HomeRepository {
     override suspend fun fetchAll(startDate: String, endDate: String): Result<List<ExpenseModel>> {
         return try {
             val response = expenseDao.fetchBetweenDate(startDate, endDate)

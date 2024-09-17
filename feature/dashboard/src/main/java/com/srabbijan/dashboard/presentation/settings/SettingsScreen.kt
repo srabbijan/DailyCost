@@ -6,15 +6,19 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.ArrowForwardIos
 import androidx.compose.material.icons.outlined.ArrowCircleRight
+import androidx.compose.material.icons.outlined.ArrowForwardIos
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.flowWithLifecycle
 import androidx.navigation.NavHostController
@@ -53,25 +57,44 @@ fun SettingsScreen(
         topBar = { AppToolbarHome("Settings") },
     ) { innerPadding ->
 
-        Column(modifier = Modifier.padding(innerPadding)) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(innerPadding)
+        ) {
 
-            LazyColumn(
-                modifier = Modifier.weight(1f),
-            ) {
+            LazyColumn {
                 items(uiState.value.settingsOptionList) { data ->
                     Row(
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier
+                            .fillMaxWidth()
                             .clickable {
-                                viewModel.onEvent(event = Settings.Event.SettingOptionNavigation(data.route))
-                            },
+                                viewModel.onEvent(
+                                    event = Settings.Event.SettingOptionNavigation(
+                                        data.route
+                                    )
+                                )
+                            }
+                            .padding(all = 12.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Image(
-                            painter = painterResource(data.icon),
-                            contentDescription = null,
-                        )
-                        Text(data.name)
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Image(
+                                painter = painterResource(data.icon),
+                                contentDescription = null,
+                            )
+                            Spacer(modifier = Modifier.width(12.dp))
+                            Text(
+                                data.name,
+                                style = AppTheme.typography.titleNormal
+                            )
+                        }
+
                         Icon(
-                            imageVector = Icons.Outlined.ArrowCircleRight,
+                            imageVector = Icons.AutoMirrored.Outlined.ArrowForwardIos,
                             contentDescription = null,
                         )
                     }

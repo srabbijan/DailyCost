@@ -1,20 +1,24 @@
 package com.srabbijan.dashboard.presentation
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Receipt
 import androidx.compose.material.icons.outlined.Settings
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.LocalLifecycleOwner
-import androidx.lifecycle.flowWithLifecycle
 import androidx.navigation.NavHostController
 import com.srabbijan.common.navigation.NavigationRoute
 import com.srabbijan.dashboard.presentation.home.HomeScreen
@@ -24,7 +28,6 @@ import com.srabbijan.dashboard.presentation.settings.SettingsViewModel
 import com.srabbijan.design.AppNavigationBar
 import com.srabbijan.design.AppNavigationItem
 import com.srabbijan.design.theme.AppTheme
-import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun DashboardScreen(
@@ -34,36 +37,14 @@ fun DashboardScreen(
     navHostController: NavHostController
 ) {
 
-    val lifecycleOwner = LocalLifecycleOwner.current
-
-    LaunchedEffect(key1 = viewModel.navigation) {
-        viewModel.navigation.flowWithLifecycle(lifecycleOwner.lifecycle)
-            .collectLatest {
-                when (it) {
-                    Dashboard.Navigation.GoToAddExpense -> {
-                        navHostController.navigate(NavigationRoute.ExpenseAdd)
-                    }
-                }
-            }
-    }
-
     var bottomNavState by rememberSaveable {
-        mutableStateOf(0)
+        mutableIntStateOf(0)
     }
     Scaffold(
         modifier = Modifier
             .windowInsetsPadding(WindowInsets.safeDrawing)
             .fillMaxSize(),
         containerColor = AppTheme.colorScheme.background,
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = {
-                    viewModel.onEvent(event = Dashboard.Event.AddExpense)
-                },
-            ) {
-                Icon(Icons.Filled.Add, "Floating action button.")
-            }
-        },
         bottomBar = {
             AppNavigationBar(
                 listOf(
@@ -102,7 +83,8 @@ fun DashboardScreen(
             when (bottomNavState) {
                 0 -> {
                     HomeScreen(
-                        homeViewModel
+                        homeViewModel,
+                        navHostController = navHostController
                     )
                 }
 

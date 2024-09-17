@@ -13,24 +13,20 @@ class DashboardViewModel : ViewModel() {
     val navigation: Flow<Dashboard.Navigation> = _navigation.receiveAsFlow()
 
     fun onEvent(event: Dashboard.Event) {
-        when (event) {
-            is Dashboard.Event.AddExpense -> {
-                viewModelScope.launch {
-                    _navigation.send(Dashboard.Navigation.GoToAddExpense)
-                }
-            }
-        }
+//        when (event) {
+//
+//        }
     }
 }
 
 object Dashboard {
 
     sealed interface Navigation {
-        data object GoToAddExpense : Navigation
+//        data object GoToAddExpense : Navigation
     }
 
     sealed interface Event {
-        data object AddExpense : Event
+//        data object AddExpense : Event
     }
 
 }

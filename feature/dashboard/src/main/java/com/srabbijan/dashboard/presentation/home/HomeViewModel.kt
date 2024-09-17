@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.srabbijan.common.utils.*
 import com.srabbijan.dashboard.domain.model.SummaryModel
-import com.srabbijan.dashboard.domain.useCase.DashboardUseCase
+import com.srabbijan.dashboard.domain.useCase.HomeUseCase
 import com.srabbijan.database.dto.ExpenseModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
-    private val dashboardUseCases: DashboardUseCase,
+    private val dashboardUseCases: HomeUseCase,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(Home.UiState())
@@ -44,6 +44,11 @@ class HomeViewModel(
                 generateDate()
             }
 
+            Home.Event.AddExpense -> {
+                viewModelScope.launch {
+                    _navigation.send(Home.Navigation.GoToAddExpense)
+                }
+            }
         }
     }
 
@@ -114,11 +119,11 @@ object Home {
 
 
     sealed interface Navigation {
-
+        data object GoToAddExpense : Navigation
     }
 
     sealed interface Event {
-
+        data object AddExpense : Event
         data object ThisMonth : Event
         data object NextInterval : Event
         data object PreInterval : Event

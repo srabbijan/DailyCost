@@ -19,4 +19,6 @@ val onErrorContainer = Color(0xFF8C1D18)
 val background = Color(0xFFFEF7FF)
 val onBackground = Color(0xFF1D1B20)
 
-val outline = Color(0xFF79747E)
+val outline = Color.LightGray
+
+val success = Color(0xFF4CAF50)

@@ -1,9 +1,9 @@
 package com.srabbijan.dashboard.di
 
 
-import com.srabbijan.dashboard.data.DashboardRepositoryImpl
-import com.srabbijan.dashboard.domain.DashboardRepository
-import com.srabbijan.dashboard.domain.useCase.DashboardUseCase
+import com.srabbijan.dashboard.data.HomeRepositoryImpl
+import com.srabbijan.dashboard.domain.HomeRepository
+import com.srabbijan.dashboard.domain.useCase.HomeUseCase
 import com.srabbijan.dashboard.domain.useCase.FetchAllEntry
 import com.srabbijan.dashboard.domain.useCase.FetchSummaryEntry
 import com.srabbijan.dashboard.navigation.DashboardFeatureApi
@@ -19,12 +19,12 @@ val dashboardNavigationModule = module {
 
 }
 val dashboardRepositoryModule = module {
-    single<DashboardRepository> { DashboardRepositoryImpl(get()) }
+    single<HomeRepository> { HomeRepositoryImpl(get()) }
 }
 val dashboardUseCaseModule = module {
     factory { FetchAllEntry(get()) }
     factory { FetchSummaryEntry(get()) }
-    factory { DashboardUseCase(get(), get()) }
+    factory { HomeUseCase(get(), get()) }
 }
 val dashboardViewModelModule = module {
     viewModel { DashboardViewModel() }
