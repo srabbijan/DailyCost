@@ -9,4 +9,5 @@ data class ExpenseModel(
     val categoryIcon: Int? = null,
     val categoryName: String? = null,
     val description: String? = null,
+    val transactions: Int = 1
 )

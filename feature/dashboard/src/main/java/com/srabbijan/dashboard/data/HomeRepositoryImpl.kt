@@ -33,5 +33,13 @@ class HomeRepositoryImpl(
             Result.failure(e)
         }
     }
+    override suspend fun fetchReport(startDate: String, endDate: String): Result<List<ExpenseModel>> {
+        return try {
+            val response = expenseDao.fetchReportBetweenDate(startDate, endDate)
+            Result.success(response)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
 
 }

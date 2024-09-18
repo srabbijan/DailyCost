@@ -23,6 +23,8 @@ import androidx.navigation.NavHostController
 import com.srabbijan.common.navigation.NavigationRoute
 import com.srabbijan.dashboard.presentation.home.HomeScreen
 import com.srabbijan.dashboard.presentation.home.HomeViewModel
+import com.srabbijan.dashboard.presentation.report.ReportScreen
+import com.srabbijan.dashboard.presentation.report.ReportViewModel
 import com.srabbijan.dashboard.presentation.settings.SettingsScreen
 import com.srabbijan.dashboard.presentation.settings.SettingsViewModel
 import com.srabbijan.design.AppNavigationBar
@@ -31,7 +33,7 @@ import com.srabbijan.design.theme.AppTheme
 
 @Composable
 fun DashboardScreen(
-    viewModel: DashboardViewModel,
+    reportViewModel: ReportViewModel,
     homeViewModel: HomeViewModel,
     settingViewModel: SettingsViewModel,
     navHostController: NavHostController
@@ -89,9 +91,8 @@ fun DashboardScreen(
                 }
 
                 1 -> {
-                    SettingsScreen(
-                        settingViewModel,
-                        navHostController
+                    ReportScreen(
+                        reportViewModel
                     )
                 }
 

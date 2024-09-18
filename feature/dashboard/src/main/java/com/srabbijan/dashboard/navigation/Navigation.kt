@@ -6,8 +6,8 @@ import androidx.navigation.compose.composable
 import com.srabbijan.common.navigation.FeatureApi
 import com.srabbijan.common.navigation.NavigationRoute
 import com.srabbijan.dashboard.presentation.DashboardScreen
-import com.srabbijan.dashboard.presentation.DashboardViewModel
 import com.srabbijan.dashboard.presentation.home.HomeViewModel
+import com.srabbijan.dashboard.presentation.report.ReportViewModel
 import com.srabbijan.dashboard.presentation.settings.SettingsViewModel
 import org.koin.androidx.compose.koinViewModel
 
@@ -19,11 +19,12 @@ class DashboardFeatureApiImpl : DashboardFeatureApi {
     ) {
         navGraphBuilder.apply {
             composable<NavigationRoute.Dashboard> {
-                val viewModel: DashboardViewModel = koinViewModel()
+
                 val homeViewModel :HomeViewModel = koinViewModel ()
                 val settingViewModel : SettingsViewModel = koinViewModel ()
+                val reportViewModel : ReportViewModel = koinViewModel ()
                 DashboardScreen(
-                    viewModel = viewModel,
+                    reportViewModel = reportViewModel,
                     homeViewModel = homeViewModel,
                     settingViewModel = settingViewModel,
                     navHostController = navHostController
