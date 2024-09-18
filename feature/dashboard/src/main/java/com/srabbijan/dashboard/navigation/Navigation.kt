@@ -19,7 +19,6 @@ class DashboardFeatureApiImpl : DashboardFeatureApi {
     ) {
         navGraphBuilder.apply {
             composable<NavigationRoute.Dashboard> {
-
                 val homeViewModel :HomeViewModel = koinViewModel ()
                 val settingViewModel : SettingsViewModel = koinViewModel ()
                 val reportViewModel : ReportViewModel = koinViewModel ()

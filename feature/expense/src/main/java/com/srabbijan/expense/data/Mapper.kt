@@ -5,10 +5,11 @@ import com.srabbijan.expense.domain.model.ExpenseRequest
 
 fun ExpenseRequest.toExpenseTable(): ExpenseTable {
     return ExpenseTable(
-        id = 0,
+        id = id?:0,
         type = type,
         amount = amount,
         categoryId = categoryId,
         description = description,
+        date = date
     )
 }

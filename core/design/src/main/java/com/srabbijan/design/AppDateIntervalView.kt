@@ -1,6 +1,7 @@
 package com.srabbijan.design
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -55,26 +56,7 @@ fun AppDateIntervalView(
                     )
                 }
 
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier
-                        .clip(AppTheme.shape.button)
-                        .background(
-                            color = AppTheme.colorScheme.onPrimaryContainer.copy(0.05f)
-                        )
-                        .padding(horizontal = 12.dp, vertical = 8.dp),
-                ) {
-                    Icon(
-                        modifier = Modifier.size(20.dp),
-                        imageVector = Icons.Outlined.DateRange,
-                        contentDescription = null,
-                    )
-                    Spacer(modifier = Modifier.size(8.dp))
-                    Text(
-                        text = showingDate,
-                        style = AppTheme.typography.paragraph
-                    )
-                }
+                DateText(showingDate)
 
                 IconButton(
                     onClick = {
@@ -100,5 +82,33 @@ fun AppDateIntervalView(
                 }
             }
         }
+    }
+}
+
+@Composable
+fun DateText(
+    showingDate: String,
+    onClick:  (() -> Unit )?=null
+) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .clip(AppTheme.shape.button)
+            .background(
+                color = AppTheme.colorScheme.onPrimaryContainer.copy(0.05f)
+            )
+            .clickable { onClick?.invoke() }
+            .padding(horizontal = 12.dp, vertical = 8.dp),
+    ) {
+        Icon(
+            modifier = Modifier.size(20.dp),
+            imageVector = Icons.Outlined.DateRange,
+            contentDescription = null,
+        )
+        Spacer(modifier = Modifier.size(8.dp))
+        Text(
+            text = showingDate,
+            style = AppTheme.typography.paragraph
+        )
     }
 }

@@ -49,6 +49,12 @@ class HomeViewModel(
                     _navigation.send(Home.Navigation.GoToAddExpense)
                 }
             }
+
+            is Home.Event.EditExpense -> {
+                viewModelScope.launch {
+                    _navigation.send(Home.Navigation.GoToEditExpense(event.id))
+                }
+            }
         }
     }
 
@@ -120,10 +126,12 @@ object Home {
 
     sealed interface Navigation {
         data object GoToAddExpense : Navigation
+        data class GoToEditExpense(val id: Long) : Navigation
     }
 
     sealed interface Event {
         data object AddExpense : Event
+        data class EditExpense(val id: Long) : Event
         data object ThisMonth : Event
         data object NextInterval : Event
         data object PreInterval : Event

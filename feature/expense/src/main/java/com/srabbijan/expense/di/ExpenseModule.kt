@@ -5,7 +5,9 @@ package com.srabbijan.expense.di
 import com.srabbijan.expense.data.ExpenseRepositoryImpl
 import com.srabbijan.expense.domain.ExpenseRepository
 import com.srabbijan.expense.domain.useCase.ExpenseUseCase
+import com.srabbijan.expense.domain.useCase.FetchByIdEntry
 import com.srabbijan.expense.domain.useCase.InsertEntry
+import com.srabbijan.expense.domain.useCase.UpdateEntry
 import com.srabbijan.expense.navigation.ExpenseFeatureApi
 import com.srabbijan.expense.navigation.ExpenseFeatureApiImpl
 import com.srabbijan.expense.presentation.ExpenseViewModel
@@ -21,7 +23,9 @@ val expenseRepositoryModule = module {
 
 val expenseUseCaseModule = module {
     factory { InsertEntry(get()) }
-    factory { ExpenseUseCase(get()) }
+    factory { UpdateEntry(get()) }
+    factory { FetchByIdEntry(get()) }
+    factory { ExpenseUseCase(get(),get(),get()) }
 }
 val expenseViewModelModule = module {
     viewModel { ExpenseViewModel(get(),get()) }

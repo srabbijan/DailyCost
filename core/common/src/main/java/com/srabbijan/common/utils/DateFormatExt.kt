@@ -451,7 +451,7 @@ fun getDayYearMonth(apiDate: String): Triple<Int, Int, Int> {
 }
 @SuppressLint("SimpleDateFormat")
 fun convertMillisToDate(millis: Long): String {
-    val formatter = SimpleDateFormat("yyyy-MM-dd")
+    val formatter = SimpleDateFormat(FORMAT_yyyy_MM_dd_HH_mm_ss)
     return formatter.format(Date(millis))
 }
 @SuppressLint("SimpleDateFormat")

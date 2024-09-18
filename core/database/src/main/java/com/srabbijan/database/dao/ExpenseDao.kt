@@ -3,6 +3,7 @@ package com.srabbijan.database.dao
 import androidx.room.*
 import com.srabbijan.common.utils.TransactionType
 import com.srabbijan.database.dto.ExpenseModel
+import com.srabbijan.database.dto.ExpenseWithCategory
 import com.srabbijan.database.entity.ExpenseTable
 
 @Dao
@@ -57,4 +58,8 @@ interface ExpenseDao {
         "select SUM (amount)  from expense_table where type=:type and (date(date) BETWEEN date(:start) AND date(:end))"
     )
     suspend fun sumAmountBetweenDate(start: String, end: String,type: String = TransactionType.CASH_IN.value): Double?
+
+    @Transaction
+    @Query("SELECT * FROM expense_table where id =:id")
+    suspend fun fetchById(id: Long): ExpenseWithCategory?
 }

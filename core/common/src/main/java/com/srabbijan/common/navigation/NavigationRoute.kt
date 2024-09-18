@@ -20,7 +20,9 @@ sealed class NavigationRoute {
     data object Expense : NavigationRoute()
 
     @Serializable
-    data object ExpenseAdd : NavigationRoute()
+    data class ExpenseAdd(
+        val expenseId: Long? = null
+    ) : NavigationRoute()
 
     @Serializable
     data object Category : NavigationRoute()

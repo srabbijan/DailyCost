@@ -6,8 +6,11 @@ import com.srabbijan.category.domain.useCase.CategoryUseCase
 import com.srabbijan.common.utils.Status
 import com.srabbijan.common.utils.TransactionType
 import com.srabbijan.common.utils.UiText
+import com.srabbijan.common.utils.getCurrentDateTime
 import com.srabbijan.common.utils.logDebug
+import com.srabbijan.database.dto.ExpenseWithCategory
 import com.srabbijan.database.entity.CategoryTable
+import com.srabbijan.database.entity.ExpenseTable
 import com.srabbijan.expense.domain.model.ExpenseRequest
 import com.srabbijan.expense.domain.useCase.ExpenseUseCase
 import kotlinx.coroutines.Dispatchers
@@ -26,7 +29,6 @@ class ExpenseViewModel(
     private val _navigation = Channel<ExpenseAdd.Navigation>()
     val navigation: Flow<ExpenseAdd.Navigation> = _navigation.receiveAsFlow()
 
-
     fun onEvent(event: ExpenseAdd.Event) {
         when (event) {
 
@@ -37,7 +39,9 @@ class ExpenseViewModel(
             }
 
             is ExpenseAdd.Event.Update -> {
-
+                if (validateInputs()) {
+                    update()
+                }
             }
 
             is ExpenseAdd.Event.Amount -> {
@@ -62,8 +66,42 @@ class ExpenseViewModel(
                 _uiState.value = _uiState.value.copy(shouldShowCategoryBottomSheet = true)
                 fetchCategoryList()
             }
+
+            is ExpenseAdd.Event.FetchExpenseById -> {
+                fetchExpenseById(event.id)
+            }
+
+            is ExpenseAdd.Event.Date -> {
+                _uiState.value = _uiState.value.copy(date = event.value)
+            }
         }
     }
+
+    private fun fetchExpenseById(id: Long){
+        viewModelScope.launch(Dispatchers.IO) {
+            useCase.fetchById(id).collectLatest { response ->
+                when (response.status) {
+                    Status.SUCCESS -> {
+                        val data = response.data as? ExpenseWithCategory ?: return@collectLatest
+//                        _uiState.update { ExpenseAdd.UiState(categoryList = data) }
+                        _uiState.value = _uiState.value.copy(expenseId = data.expense?.id)
+                        _uiState.value = _uiState.value.copy(date = data.expense?.date?: getCurrentDateTime())
+                        _uiState.value = _uiState.value.copy(category = data.category)
+                        _uiState.value = _uiState.value.copy(amount = data.expense?.amount.toString())
+                    }
+
+                    Status.ERROR -> {
+//                        _uiState.update { ExpenseAdd.UiState(error = UiText.DynamicString(response.message.toString())) }
+                    }
+
+                    Status.LOADING -> {
+//                        _uiState.update { ExpenseAdd.UiState(isLoading = true) }
+                    }
+                }
+            }
+        }
+    }
+
     private fun fetchCategoryList(){
         viewModelScope.launch(Dispatchers.IO) {
             categoryUseCase.fetchAll().collectLatest { response ->
@@ -103,10 +141,41 @@ class ExpenseViewModel(
             type = uiState.value.type,
             amount = uiState.value.amount.toDouble(),
             description = null,
+            date = uiState.value.date,
             categoryId = uiState.value.category?.id,
         )
         viewModelScope.launch(Dispatchers.IO) {
             useCase.insert(request).collectLatest { response ->
+                when (response.status) {
+                    Status.SUCCESS -> {
+                        val data = response.data as? Boolean ?: return@collectLatest
+                        _uiState.update { ExpenseAdd.UiState(isAddCompleted = data) }
+                        _navigation.send(ExpenseAdd.Navigation.GoToDashboard)
+                    }
+
+                    Status.ERROR -> {
+                        _uiState.update { ExpenseAdd.UiState(error = UiText.DynamicString(response.message.toString())) }
+                    }
+
+                    Status.LOADING -> {
+                        _uiState.update { ExpenseAdd.UiState(isLoading = true) }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun update(){
+        val request = ExpenseRequest(
+            id = uiState.value.expenseId,
+            type = uiState.value.type,
+            amount = uiState.value.amount.toDouble(),
+            description = null,
+            date = uiState.value.date,
+            categoryId = uiState.value.category?.id
+        )
+        viewModelScope.launch(Dispatchers.IO) {
+            useCase.update(request).collectLatest { response ->
                 when (response.status) {
                     Status.SUCCESS -> {
                         val data = response.data as? Boolean ?: return@collectLatest
@@ -135,6 +204,8 @@ object ExpenseAdd {
         val error: UiText = UiText.Idle,
         var isAddCompleted: Boolean = false,
 
+        val expenseId: Long? = null,
+        val date: String = getCurrentDateTime(),
         val amount: String = "",
         val amountError: UiText? = null,
         val category: CategoryTable? = null,
@@ -156,8 +227,10 @@ object ExpenseAdd {
         data object Update : Event
         data class Amount(val value: String) : Event
         data class Type(val value: String):Event
+        data class Date(val value: String):Event
         data class Category(val value: CategoryTable) : Event
         data object SelectCategory : Event
+        data class FetchExpenseById(val id:Long):Event
     }
 
 }

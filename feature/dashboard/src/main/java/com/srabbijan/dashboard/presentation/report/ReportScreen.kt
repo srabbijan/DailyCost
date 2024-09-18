@@ -14,9 +14,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.outlined.ArrowForwardIos
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,11 +26,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LocalLifecycleOwner
+import com.srabbijan.common.utils.TransactionType
 import com.srabbijan.common.utils.toCurrencyFormat
-import com.srabbijan.common.utils.toUiTime
 import com.srabbijan.design.AppDateIntervalView
 import com.srabbijan.design.AppToolbarHome
 import com.srabbijan.design.theme.AppTheme
+import com.srabbijan.design.theme.success
 
 @Composable
 fun ReportScreen(
@@ -111,7 +109,8 @@ fun ReportScreen(
                         }
                         Text(
                             data.amount.toCurrencyFormat(),
-                            style = AppTheme.typography.paragraph
+                            style = AppTheme.typography.paragraph,
+                            color = if (data.type == TransactionType.CASH_IN.value) success else com.srabbijan.design.theme.error
                         )
                     }
                 }

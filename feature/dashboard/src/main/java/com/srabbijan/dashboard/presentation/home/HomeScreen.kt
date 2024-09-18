@@ -1,6 +1,7 @@
 package com.srabbijan.dashboard.presentation.home
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -65,7 +66,10 @@ fun HomeScreen(
             .collectLatest {
                 when (it) {
                     Home.Navigation.GoToAddExpense -> {
-                        navHostController.navigate(NavigationRoute.ExpenseAdd)
+                        navHostController.navigate(NavigationRoute.ExpenseAdd())
+                    }
+                    is Home.Navigation.GoToEditExpense -> {
+                        navHostController.navigate(NavigationRoute.ExpenseAdd(it.id))
                     }
                 }
             }
@@ -160,10 +164,13 @@ fun HomeScreen(
                 modifier = Modifier.weight(1f),
             ) {
                 items(uiState.value.expenseList) { data ->
-                    Column(modifier = Modifier.padding(all = 12.dp)) {
+                    Column(modifier = Modifier.clickable {
+                        viewModel.onEvent(Home.Event.EditExpense(data.id))
+                    }
+                        .padding(all = 12.dp)) {
                         Row(
                             horizontalArrangement = Arrangement.SpaceAround,
-                            verticalAlignment = Alignment.CenterVertically
+                            verticalAlignment = Alignment.CenterVertically,
                         ) {
                             Image(
                                 painter = painterResource(
