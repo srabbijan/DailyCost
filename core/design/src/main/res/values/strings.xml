@@ -103,8 +103,8 @@
     <string name="taka">টাকা</string>
     <string name="address">ঠিকানা</string>
     <string name="mobile_no">মোবাইল নং.</string>
-    <string name="save">সেভ করুন</string>
-    <string name="update">আপডেট</string>
+    <string name="save">Save</string>
+    <string name="update">Update</string>
     <string name="search_by_name_number">নাম/মোবাইল দিয়ে সার্চ করুন</string>
     <string name="search">সার্চ</string>
 </resources>

@@ -26,12 +26,5 @@ sealed class NavigationRoute {
     data object Category : NavigationRoute()
 
     @Serializable
-    data class CategoryAdd(
-        val productId: String? = null
-    ) : NavigationRoute()
-}
-
-enum class BackToPage(val value: String) {
-    DASHBOARD("dashboard"),
-    EXPENSE_ADD("expense_add"),
+    data object CategoryAdd: NavigationRoute()
 }

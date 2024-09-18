@@ -5,6 +5,6 @@ import org.koin.dsl.module
 
 val appModule = module {
     single {
-        NavigationSubGraphs(get(),get())
+        NavigationSubGraphs(get(),get(),get())
     }
 }

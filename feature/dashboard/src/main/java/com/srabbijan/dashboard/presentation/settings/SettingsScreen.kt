@@ -2,13 +2,21 @@ package com.srabbijan.dashboard.presentation.settings
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowForwardIos
-import androidx.compose.material.icons.outlined.ArrowCircleRight
-import androidx.compose.material.icons.outlined.ArrowForwardIos
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -42,7 +50,10 @@ fun SettingsScreen(
             .collectLatest {
                 when (it) {
                     Settings.Navigation.GoToManageCategory -> {
-                        navHostController.navigate(NavigationRoute.ExpenseAdd)
+                        navHostController.navigate(NavigationRoute.Category)
+//                        {
+//                            popUpTo(NavigationRoute.Dashboard) { inclusive = true }
+//                        }
                     }
                 }
             }

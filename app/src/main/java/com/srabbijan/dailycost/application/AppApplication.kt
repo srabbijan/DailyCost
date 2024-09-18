@@ -1,6 +1,10 @@
 package com.srabbijan.dailycost.application
 
 import android.app.Application
+import com.srabbijan.category.di.categoryNavigationModule
+import com.srabbijan.category.di.categoryRepositoryModule
+import com.srabbijan.category.di.categoryUseCaseModule
+import com.srabbijan.category.di.categoryViewModelModule
 import com.srabbijan.dailycost.di.appModule
 import com.srabbijan.dashboard.di.*
 import com.srabbijan.database.di.databaseModule
@@ -23,6 +27,11 @@ class AppApplication : Application() {
             expenseRepositoryModule,
             expenseUseCaseModule,
             expenseViewModelModule,
+
+            categoryNavigationModule,
+            categoryRepositoryModule,
+            categoryUseCaseModule,
+            categoryViewModelModule,
 
             appModule,
             databaseModule

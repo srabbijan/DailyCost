@@ -22,9 +22,9 @@ fun AppNavigation(
             navHostController = navHostController,
             navGraphBuilder = this
         )
-//        navigationSubGraphs.categoryFeatureApi.registerGraph(
-//            navHostController = navHostController,
-//            navGraphBuilder = this
-//        )
+        navigationSubGraphs.categoryFeatureApi.registerGraph(
+            navHostController = navHostController,
+            navGraphBuilder = this
+        )
     }
 }

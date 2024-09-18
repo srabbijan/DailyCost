@@ -14,4 +14,5 @@ val databaseModule = module {
 
     // Provide the DAO instance
     single { get<LocalDB>().expenseDao }
+    single { get<LocalDB>().categoryDao }
 }

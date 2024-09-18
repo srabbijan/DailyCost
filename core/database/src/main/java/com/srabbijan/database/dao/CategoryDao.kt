@@ -1,9 +1,12 @@
 package com.srabbijan.database.dao
 
-import androidx.room.*
-import com.srabbijan.database.dto.ExpenseModel
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import androidx.room.Transaction
+import androidx.room.Update
 import com.srabbijan.database.entity.CategoryTable
-import com.srabbijan.database.entity.ExpenseTable
 
 @Dao
 interface CategoryDao {
@@ -24,9 +27,7 @@ interface CategoryDao {
     suspend fun deleteById( id: Long)
 
     @Transaction
-    @Query(
-        "SELECT * from category_table ORDER BY id desc"
-    )
+    @Query("SELECT * from category_table ORDER BY name COLLATE NOCASE asc")
     suspend fun fetchAll(): List<CategoryTable>
 
 }
