@@ -57,7 +57,7 @@ private val typography = AppTypography(
     ),
     labelLarge = TextStyle(
         fontFamily = roboto,
-        fontWeight = FontWeight.Medium,
+        fontWeight = FontWeight.Normal,
         fontSize = 16.sp
     ),
     labelNormal = TextStyle(

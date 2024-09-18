@@ -23,12 +23,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.srabbijan.design.R
 import com.srabbijan.database.entity.CategoryTable
 import com.srabbijan.design.AppHorizontalDivider
+import com.srabbijan.design.R
 import com.srabbijan.design.theme.AppTheme
 import com.srabbijan.design.utils.r
 import kotlinx.coroutines.launch
@@ -49,7 +48,7 @@ fun CategoryIconSelectBottomSheet(
         ModalBottomSheet(
             onDismissRequest = { showModalBottomSheet.value = false },
             sheetState = bottomSheetState,
-            containerColor = Color.White
+            containerColor = AppTheme.colorScheme.primaryContainer
         ) {
             Column(
                 modifier = Modifier
@@ -57,12 +56,12 @@ fun CategoryIconSelectBottomSheet(
                     .padding(12.r()),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text(title)
+                Text(title, style = AppTheme.typography.paragraph)
                 AppHorizontalDivider()
 
                 LazyVerticalGrid(
                     modifier = Modifier.weight(1f),
-                    columns = GridCells.Fixed(3),
+                    columns = GridCells.Fixed(4),
                     horizontalArrangement = Arrangement.Center
                 ) {
                     items(data) { item ->
@@ -103,9 +102,10 @@ fun CategorySelectBottomSheet(
 
     if (showModalBottomSheet.value)
         ModalBottomSheet(
+            modifier = Modifier.fillMaxWidth(),
             onDismissRequest = { showModalBottomSheet.value = false },
             sheetState = bottomSheetState,
-            containerColor = Color.White
+            containerColor = AppTheme.colorScheme.primaryContainer
         ) {
             Column(
                 modifier = Modifier
@@ -113,13 +113,13 @@ fun CategorySelectBottomSheet(
                     .padding(12.r()),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text(title)
+                Text(title, style = AppTheme.typography.paragraph)
                 AppHorizontalDivider()
 
                 LazyVerticalGrid(
                     modifier = Modifier.fillMaxWidth(),
-                    columns = GridCells.Fixed(3),
-                    horizontalArrangement = Arrangement.Center
+                    columns = GridCells.Fixed(4),
+                    horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
                     items(data) { item ->
                         Column(

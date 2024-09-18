@@ -21,7 +21,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
@@ -33,6 +32,7 @@ import com.srabbijan.design.AppToolbarWithBack
 import com.srabbijan.design.InputTextField
 import com.srabbijan.design.PrimaryButton
 import com.srabbijan.design.R
+import com.srabbijan.design.theme.AppTheme
 import kotlinx.coroutines.flow.collectLatest
 
 
@@ -43,7 +43,6 @@ fun CategoryAddScreen(
     navHostController: NavHostController
 ) {
     val uiState = viewModel.uiState.collectAsState()
-    val context = LocalContext.current
     val lifecycleOwner = androidx.lifecycle.compose.LocalLifecycleOwner.current
     val showCategoryIconSelectBottomSheet = remember { mutableStateOf(false) }
 
@@ -73,6 +72,7 @@ fun CategoryAddScreen(
         modifier = Modifier
             .windowInsetsPadding(WindowInsets.safeDrawing)
             .fillMaxSize(),
+        containerColor = AppTheme.colorScheme.primaryContainer,
         topBar = {
             AppToolbarWithBack(
                 label = if (categoryId == null) "Add new category" else "Edit category"

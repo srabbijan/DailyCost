@@ -41,6 +41,7 @@ import com.srabbijan.common.utils.UiText
 import com.srabbijan.common.utils.toCurrencyFormat
 import com.srabbijan.common.utils.toUiTime
 import com.srabbijan.design.AppDateIntervalView
+import com.srabbijan.design.AppFloatingButton
 import com.srabbijan.design.AppToolbarHome
 import com.srabbijan.design.LoadingDialog
 import com.srabbijan.design.R
@@ -89,12 +90,8 @@ fun HomeScreen(
         containerColor = AppTheme.colorScheme.background,
         topBar = { AppToolbarHome() },
         floatingActionButton = {
-            FloatingActionButton(
-                onClick = {
-                    viewModel.onEvent(event = Home.Event.AddExpense)
-                },
-            ) {
-                Icon(Icons.Filled.Add, "Floating action button.")
+            AppFloatingButton{
+                viewModel.onEvent(event = Home.Event.AddExpense)
             }
         }
     ) { innerPadding ->
@@ -163,7 +160,7 @@ fun HomeScreen(
                 modifier = Modifier.weight(1f),
             ) {
                 items(uiState.value.expenseList) { data ->
-                    Column(modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp)) {
+                    Column(modifier = Modifier.padding(all = 12.dp)) {
                         Row(
                             horizontalArrangement = Arrangement.SpaceAround,
                             verticalAlignment = Alignment.CenterVertically
@@ -175,7 +172,7 @@ fun HomeScreen(
                                 modifier = Modifier.size(32.dp),
                                 contentDescription = null
                             )
-                            Spacer(modifier = Modifier.width(5.dp))
+                            Spacer(modifier = Modifier.width(8.dp))
                             Column {
                                 Text(text = data.categoryName?:"Others", style = AppTheme.typography.paragraph)
                                 Text(text = data.date.toUiTime())
@@ -187,11 +184,7 @@ fun HomeScreen(
                                 color = if (data.type == TransactionType.CASH_IN.value) success else error
                             )
                         }
-                        HorizontalDivider(
-                            modifier = Modifier.padding(top = 6.dp),
-                            thickness = 1.dp,
-                            color = AppTheme.colorScheme.separator
-                        )
+
                     }
 
                 }

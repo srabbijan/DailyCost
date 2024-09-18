@@ -100,7 +100,7 @@ fun SettingsScreen(
                             Spacer(modifier = Modifier.width(12.dp))
                             Text(
                                 data.name,
-                                style = AppTheme.typography.titleNormal
+                                style = AppTheme.typography.paragraph
                             )
                         }
 

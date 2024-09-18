@@ -25,6 +25,7 @@ import com.srabbijan.design.AppToolbarWithBack
 import com.srabbijan.design.InputTextField
 import com.srabbijan.design.PrimaryButton
 import com.srabbijan.design.R
+import com.srabbijan.design.theme.AppTheme
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
@@ -62,6 +63,7 @@ fun ExpenseAddScreen(
         modifier = Modifier
             .windowInsetsPadding(WindowInsets.safeDrawing)
             .fillMaxSize(),
+        containerColor = AppTheme.colorScheme.primaryContainer,
         topBar = {
             AppToolbarWithBack(
                 label = if (expenseId == null) "Add new" else "Edit"
@@ -86,13 +88,20 @@ fun ExpenseAddScreen(
                 .padding(innerPadding),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
+            Spacer(
+                modifier = Modifier.height(12.dp)
+            )
             var selectedIndex by remember { mutableIntStateOf(0) }
             val options = listOf("Cash Out", "Cash In")
 
             SingleChoiceSegmentedButtonRow {
                 options.forEachIndexed { index, label ->
                     SegmentedButton(
+                        colors = SegmentedButtonDefaults.colors().copy(
+                            activeContainerColor = AppTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.2f),
+                            activeContentColor = AppTheme.colorScheme.onPrimaryContainer,
+                            inactiveContainerColor = AppTheme.colorScheme.primaryContainer,
+                        ),
                         shape = SegmentedButtonDefaults.itemShape(
                             index = index,
                             count = options.size

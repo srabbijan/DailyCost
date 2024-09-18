@@ -44,7 +44,7 @@ fun DashboardScreen(
         modifier = Modifier
             .windowInsetsPadding(WindowInsets.safeDrawing)
             .fillMaxSize(),
-        containerColor = AppTheme.colorScheme.background,
+        containerColor = AppTheme.colorScheme.primaryContainer,
         bottomBar = {
             AppNavigationBar(
                 listOf(

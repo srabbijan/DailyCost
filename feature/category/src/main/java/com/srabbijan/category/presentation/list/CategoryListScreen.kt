@@ -34,6 +34,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.navigation.NavHostController
 import com.srabbijan.common.navigation.NavigationRoute
+import com.srabbijan.design.AppFloatingButton
 import com.srabbijan.design.AppToolbarWithBack
 import com.srabbijan.design.LoadingDialog
 import com.srabbijan.design.R
@@ -82,13 +83,10 @@ fun CategoryListScreen(
         modifier = Modifier
             .windowInsetsPadding(WindowInsets.safeDrawing)
             .fillMaxSize(),
+        containerColor = AppTheme.colorScheme.primaryContainer,
         floatingActionButton = {
-            FloatingActionButton(
-                onClick = {
-                    viewModel.onEvent(event = CategoryList.Event.GoToCategoryAdd)
-                },
-            ) {
-                Icon(Icons.Filled.Add, "Floating action button.")
+            AppFloatingButton {
+                viewModel.onEvent(event = CategoryList.Event.GoToCategoryAdd)
             }
         },
         topBar = {
