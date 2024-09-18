@@ -1,6 +1,10 @@
 package com.srabbijan.expense.presentation
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -8,10 +12,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.flowWithLifecycle
 import androidx.navigation.NavHostController
+import com.srabbijan.category.presentation.add.CategoryAdd
+import com.srabbijan.category.presentation.add.CategoryIconSelectBottomSheet
+import com.srabbijan.category.presentation.add.CategorySelectBottomSheet
 import com.srabbijan.common.navigation.NavigationRoute
 import com.srabbijan.common.utils.TransactionType
+import com.srabbijan.design.AppOutLineCard
 import com.srabbijan.design.AppToolbarWithBack
 import com.srabbijan.design.InputTextField
 import com.srabbijan.design.PrimaryButton
@@ -25,9 +34,8 @@ fun ExpenseAddScreen(
     navHostController: NavHostController
 ) {
     val uiState = viewModel.uiState.collectAsState()
-    val context = LocalContext.current
     val lifecycleOwner = androidx.lifecycle.compose.LocalLifecycleOwner.current
-
+    val showCategorySelectBottomSheet = remember { mutableStateOf(false) }
     /*    LaunchedEffect(key1 = true) {
             expenseId?.let {
                 viewModel.onEvent(ExpenseAdd.Event.FetchCustomerById(it))
@@ -85,7 +93,10 @@ fun ExpenseAddScreen(
             SingleChoiceSegmentedButtonRow {
                 options.forEachIndexed { index, label ->
                     SegmentedButton(
-                        shape = SegmentedButtonDefaults.itemShape(index = index, count = options.size),
+                        shape = SegmentedButtonDefaults.itemShape(
+                            index = index,
+                            count = options.size
+                        ),
                         onClick = {
                             selectedIndex = index
 
@@ -95,7 +106,7 @@ fun ExpenseAddScreen(
                                 }
 
                                 1 -> {
-                                   viewModel.onEvent(ExpenseAdd.Event.Type(TransactionType.CASH_IN.value))
+                                    viewModel.onEvent(ExpenseAdd.Event.Type(TransactionType.CASH_IN.value))
                                 }
                             }
                         },
@@ -107,6 +118,39 @@ fun ExpenseAddScreen(
                 }
             }
 
+            Spacer(
+                modifier = Modifier.height(12.dp)
+            )
+            AppOutLineCard {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable {
+                            showCategorySelectBottomSheet.value =
+                                !showCategorySelectBottomSheet.value
+                            viewModel.onEvent(ExpenseAdd.Event.SelectCategory)
+                        }
+                        .padding(12.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(text = uiState.value.category?.name ?: "Select Category")
+                    Spacer(modifier = Modifier.weight(1f))
+                    Icon(
+                        imageVector = Icons.Default.KeyboardArrowDown,
+                        contentDescription = null
+                    )
+                }
+            }
+
+            if (uiState.value.shouldShowCategoryBottomSheet) {
+                CategorySelectBottomSheet(
+                    showModalBottomSheet = showCategorySelectBottomSheet,
+                    title = "Choose Category icon",
+                    data = uiState.value.categoryList.toList()
+                ) { selectedIcon ->
+                    viewModel.onEvent(ExpenseAdd.Event.Category(selectedIcon))
+                }
+            }
             InputTextField(
                 initialValue = uiState.value.amount,
                 placeholder = "Tk",
@@ -118,6 +162,7 @@ fun ExpenseAddScreen(
             }
 
             PrimaryButton(
+                modifier = Modifier.fillMaxWidth(),
                 label = if (expenseId == null) stringResource(R.string.save) else stringResource(R.string.update)
             ) {
                 if (expenseId == null)

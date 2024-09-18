@@ -6,6 +6,7 @@ data class ExpenseModel(
     val amount: Double,
     val date: String,
     val categoryId: Long? = 0,
+    val categoryIcon: Int? = null,
     val categoryName: String? = null,
     val description: String? = null,
 )

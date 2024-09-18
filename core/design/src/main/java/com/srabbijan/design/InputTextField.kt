@@ -1,8 +1,9 @@
 package com.srabbijan.design
 
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -13,8 +14,10 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.unit.dp
 import com.srabbijan.common.utils.UiText
 import com.srabbijan.common.utils.isNumber
+import com.srabbijan.design.theme.AppTheme
 import com.srabbijan.design.utils.ssp
 
 @Composable
@@ -51,20 +54,20 @@ fun InputTextField(
         enabled = isEnable,
         leadingIcon = leadingIcon,
         trailingIcon = trailingIcon,
-        modifier = modifier,
+        modifier = modifier.fillMaxWidth().padding(horizontal = 12.dp),
         isError = isError,
         supportingText = {
             if (isError) {
                 Text(
                     text = errorMessage!!.asString(context),
-                    color = MaterialTheme.colorScheme.error,
-                    style = MaterialTheme.typography.bodySmall,
+                    color = AppTheme.colorScheme.error,
+                    style = AppTheme.typography.paragraph,
                     modifier = modifier
                 )
             }
         },
         label = { Text(placeholder, fontSize = 20.ssp()) },
-        textStyle = MaterialTheme.typography.bodySmall.copy(color = MaterialTheme.colorScheme.onSurface),
+        textStyle = AppTheme.typography.paragraph.copy(color = AppTheme.colorScheme.onPrimaryContainer),
         maxLines = maxLine,
         singleLine = singleLine,
         interactionSource = interactionSource,
@@ -78,6 +81,4 @@ fun InputTextField(
             imeAction = imeAction
         ),
     )
-
-
 }

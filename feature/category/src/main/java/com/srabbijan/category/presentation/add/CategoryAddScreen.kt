@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.width
@@ -132,9 +133,10 @@ fun CategoryAddScreen(
             }
 
             Spacer(
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.height(16.dp)
             )
             PrimaryButton(
+                modifier = Modifier.fillMaxWidth(),
                 label = if (categoryId == null) stringResource(R.string.save) else stringResource(R.string.update)
             ) {
                 if (categoryId == null)

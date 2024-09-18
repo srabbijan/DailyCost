@@ -24,5 +24,5 @@ val expenseUseCaseModule = module {
     factory { ExpenseUseCase(get()) }
 }
 val expenseViewModelModule = module {
-    viewModel { ExpenseViewModel(get()) }
+    viewModel { ExpenseViewModel(get(),get()) }
 }

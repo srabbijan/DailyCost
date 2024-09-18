@@ -4,7 +4,9 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -23,7 +25,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
+import com.srabbijan.design.R
+import com.srabbijan.database.entity.CategoryTable
 import com.srabbijan.design.AppHorizontalDivider
+import com.srabbijan.design.theme.AppTheme
 import com.srabbijan.design.utils.r
 import kotlinx.coroutines.launch
 
@@ -63,14 +69,19 @@ fun CategoryIconSelectBottomSheet(
                         Image(
                             painter = painterResource(item),
                             contentDescription = null,
-                            modifier = Modifier.clickable {
-                                scope.launch { bottomSheetState.hide() }.invokeOnCompletion {
-                                    if (!bottomSheetState.isVisible) {
-                                        showModalBottomSheet.value = false
-                                        onItemClick.invoke(item)
-                                    }
+                            modifier = Modifier
+                                .clickable {
+                                    scope
+                                        .launch { bottomSheetState.hide() }
+                                        .invokeOnCompletion {
+                                            if (!bottomSheetState.isVisible) {
+                                                showModalBottomSheet.value = false
+                                                onItemClick.invoke(item)
+                                            }
+                                        }
+
                                 }
-                            }
+                                .padding(8.dp)
                         )
                     }
                 }
@@ -78,4 +89,63 @@ fun CategoryIconSelectBottomSheet(
         }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun CategorySelectBottomSheet(
+    showModalBottomSheet: MutableState<Boolean>,
+    data: List<CategoryTable>,
+    title: String,
+    onItemClick: (CategoryTable) -> Unit
+) {
+    val scope = rememberCoroutineScope()
+    val skipPartially by remember { mutableStateOf(false) }
+    val bottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = skipPartially)
 
+    if (showModalBottomSheet.value)
+        ModalBottomSheet(
+            onDismissRequest = { showModalBottomSheet.value = false },
+            sheetState = bottomSheetState,
+            containerColor = Color.White
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(12.r()),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(title)
+                AppHorizontalDivider()
+
+                LazyVerticalGrid(
+                    modifier = Modifier.fillMaxWidth(),
+                    columns = GridCells.Fixed(3),
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    items(data) { item ->
+                        Column(
+                            modifier = Modifier
+                                .clickable {
+                                    scope
+                                        .launch { bottomSheetState.hide() }
+                                        .invokeOnCompletion {
+                                            if (!bottomSheetState.isVisible) {
+                                                showModalBottomSheet.value = false
+                                                onItemClick.invoke(item)
+                                            }
+                                        }
+                                }
+                                .padding(8.dp)
+                        ) {
+                            Image(
+                                painter = painterResource(item.icon ?: R.drawable.category),
+                                contentDescription = null,
+                            )
+                            Spacer(modifier = Modifier.height(4.dp))
+                            Text(item.name, style = AppTheme.typography.labelNormal)
+                        }
+
+                    }
+                }
+            }
+        }
+}

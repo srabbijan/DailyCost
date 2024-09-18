@@ -26,7 +26,8 @@ interface ExpenseDao {
     @Transaction
     @Query(
         "SELECT et.id as id, et.type as type, et.amount as amount,  et.date as date, et.description as description, et.category_id as categoryId, " +
-                " CASE WHEN et.category_id is not null THEN ct.name ELSE '' END AS categoryName"+
+                " CASE WHEN et.category_id is not null THEN ct.name ELSE 'Others' END AS categoryName,"+
+                " CASE WHEN et.category_id is not null THEN ct.icon ELSE null END AS categoryIcon"+
 
                 " FROM expense_table as et" +
                 " LEFT JOIN  category_table ct ON et.category_id = ct.id" +
