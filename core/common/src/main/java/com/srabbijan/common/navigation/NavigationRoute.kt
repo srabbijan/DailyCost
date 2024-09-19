@@ -29,4 +29,7 @@ sealed class NavigationRoute {
 
     @Serializable
     data object CategoryAdd: NavigationRoute()
+
+    @Serializable
+    data class PdfExport(val data: String = ""): NavigationRoute()
 }

@@ -14,6 +14,10 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.FileDownload
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,20 +30,36 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.lifecycle.flowWithLifecycle
+import androidx.navigation.NavHostController
+import com.srabbijan.common.navigation.NavigationRoute
 import com.srabbijan.common.utils.TransactionType
 import com.srabbijan.common.utils.toCurrencyFormat
+import com.srabbijan.dashboard.presentation.settings.Settings
 import com.srabbijan.design.AppDateIntervalView
 import com.srabbijan.design.AppToolbarHome
 import com.srabbijan.design.theme.AppTheme
 import com.srabbijan.design.theme.success
+import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun ReportScreen(
     viewModel: ReportViewModel,
+    navHostController: NavHostController
 ) {
     val uiState = viewModel.uiState.collectAsState()
     val lifecycleOwner = LocalLifecycleOwner.current
     val lifecycleState by lifecycleOwner.lifecycle.currentStateFlow.collectAsState()
+    LaunchedEffect(key1 = viewModel.navigation) {
+        viewModel.navigation.flowWithLifecycle(lifecycleOwner.lifecycle)
+            .collectLatest {
+                when (it) {
+                    is Report.Navigation.GoToPdfExport -> {
+                        navHostController.navigate(NavigationRoute.PdfExport(it.data))
+                    }
+                }
+            }
+    }
     LaunchedEffect(lifecycleState) {
         when (lifecycleState) {
 
@@ -58,7 +78,20 @@ fun ReportScreen(
             .windowInsetsPadding(WindowInsets.safeDrawing)
             .fillMaxSize(),
         containerColor = AppTheme.colorScheme.background,
-        topBar = { AppToolbarHome("Reports") },
+        topBar = {
+            AppToolbarHome("Reports", actions = {
+                IconButton(
+                    onClick = {
+                        viewModel.onEvent(Report.Event.ExportPdf)
+                    }
+                ) {
+                    Icon(
+                        imageVector = Icons.Outlined.FileDownload,
+                        contentDescription = null
+                    )
+                }
+            })
+        },
     ) { innerPadding ->
 
         Column(
@@ -91,7 +124,9 @@ fun ReportScreen(
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Image(
-                                painter = painterResource(data.categoryIcon?: com.srabbijan.design.R.drawable.category),
+                                painter = painterResource(
+                                    data.categoryIcon ?: com.srabbijan.design.R.drawable.category
+                                ),
                                 contentDescription = null,
                             )
                             Spacer(modifier = Modifier.width(12.dp))

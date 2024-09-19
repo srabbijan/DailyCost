@@ -92,7 +92,8 @@ fun DashboardScreen(
 
                 1 -> {
                     ReportScreen(
-                        reportViewModel
+                        reportViewModel,
+                        navHostController
                     )
                 }
 

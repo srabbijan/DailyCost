@@ -5,20 +5,27 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.srabbijan.common.utils.FORMAT_MMM_yyyy
+import com.srabbijan.common.utils.PdfGeneration
+import com.srabbijan.common.utils.PdfGenerationModel
 import com.srabbijan.common.utils.Status
+import com.srabbijan.common.utils.TransactionType
 import com.srabbijan.common.utils.UiText
 import com.srabbijan.common.utils.getMonthIntervalDateTime
 import com.srabbijan.common.utils.getThisMonthFirstDateTime
 import com.srabbijan.common.utils.getTodayFirstDateTime
 import com.srabbijan.common.utils.getTodayLastDateTime
+import com.srabbijan.common.utils.pdfGenerate
 import com.srabbijan.common.utils.toUiTime
 import com.srabbijan.dashboard.domain.useCase.HomeUseCase
 import com.srabbijan.database.dto.ExpenseModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -30,6 +37,9 @@ class ReportViewModel(
     val uiState: StateFlow<Report.UiState> get() = _uiState.asStateFlow()
     val showingDate = mutableStateOf(getTodayFirstDateTime().toUiTime(outFormat = FORMAT_MMM_yyyy))
     val offset = mutableIntStateOf(0)
+
+    private val _navigation = Channel<Report.Navigation>()
+    val navigation: Flow<Report.Navigation> = _navigation.receiveAsFlow()
 
     fun onEvent(event: Report.Event) {
         when (event) {
@@ -47,6 +57,32 @@ class ReportViewModel(
             Report.Event.PreInterval -> {
                 offset.intValue --
                 generateDate()
+            }
+
+            Report.Event.ExportPdf -> {
+                val transaction  = uiState.value.reportList.sumOf { it.amount }
+                val cashIn  = uiState.value.reportList.filter { it.type == TransactionType.CASH_IN.value }.sumOf { it.amount }
+                val cashOut  = uiState.value.reportList.filter { it.type == TransactionType.CASH_OUT.value }.sumOf { it.amount }
+                val htmlContent = pdfGenerate(
+                    PdfGenerationModel(
+                        items = uiState.value.reportList.map {
+                            PdfGeneration(
+                                it.categoryName ?: "",
+                                it.type,
+                                it.transactions.toString(),
+                                it.amount.toString()
+                            )
+                        },
+                        balance = (cashIn - cashOut).toString(),
+                        pdfTitle = showingDate.value,
+                        transaction =transaction.toString() ,
+                        cashOut = cashOut.toString(),
+                        cashIn = cashIn.toString()
+                    )
+                )
+                viewModelScope.launch {
+                    _navigation.send(Report.Navigation.GoToPdfExport(htmlContent))
+                }
             }
         }
     }
@@ -89,9 +125,13 @@ object Report {
         val reportList: List<ExpenseModel> = emptyList()
     )
 
+    sealed interface Navigation {
+        data class GoToPdfExport(val data: String = "") : Navigation
+    }
     sealed interface Event {
         data object ThisMonth : Event
         data object NextInterval : Event
         data object PreInterval : Event
+        data object ExportPdf : Event
     }
 }
