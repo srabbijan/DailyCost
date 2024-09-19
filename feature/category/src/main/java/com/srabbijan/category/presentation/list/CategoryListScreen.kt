@@ -14,11 +14,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -118,7 +114,7 @@ fun CategoryListScreen(
                 .padding(innerPadding),
         ) {
             items(uiState.value.categoryList) { data ->
-                Column(modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp)) {
+                Column(modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp)) {
                     Row(
                         horizontalArrangement = Arrangement.SpaceAround,
                         verticalAlignment = Alignment.CenterVertically
@@ -137,13 +133,7 @@ fun CategoryListScreen(
                             color = AppTheme.colorScheme.primary
                         )
                     }
-                    HorizontalDivider(
-                        modifier = Modifier.padding(top = 4.dp),
-                        thickness = 1.dp,
-                        color = AppTheme.colorScheme.separator
-                    )
                 }
-
             }
         }
     }

@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -24,7 +25,7 @@ fun AppNavigationBar(
     items: List<AppNavigationItem>,
     onClick: (Int) -> Unit,
 ) {
-    var selectedItem by remember { mutableIntStateOf(0) }
+    var selectedItem by rememberSaveable  { mutableIntStateOf(0) }
     Column(modifier = Modifier.fillMaxWidth()) {
         HorizontalDivider(
             thickness = 1.dp,

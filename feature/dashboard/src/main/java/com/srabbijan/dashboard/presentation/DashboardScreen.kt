@@ -39,7 +39,7 @@ fun DashboardScreen(
     navHostController: NavHostController
 ) {
 
-    var bottomNavState by rememberSaveable {
+    var bottomNavState by rememberSaveable  {
         mutableIntStateOf(0)
     }
     Scaffold(
