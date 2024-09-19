@@ -46,6 +46,5 @@ dependencies {
     //navigation
     implementation(libs.androidx.navigation.compose)
     implementation(libs.kotlinx.serialization.json)
-    implementation ("com.itextpdf:itext7-core:7.2.3")
-    implementation ("com.itextpdf.tool:xmlworker:5.5.13.2")
+
 }

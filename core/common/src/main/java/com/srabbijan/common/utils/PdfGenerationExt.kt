@@ -1,11 +1,6 @@
 package com.srabbijan.common.utils
 
 
-import android.content.Context
-import android.content.Intent
-import android.widget.Toast
-import androidx.core.content.FileProvider
-import java.io.File
 const val styleText = "    <style>\n" +
         "        body {\n" +
         "            margin: 1;\n" +
@@ -134,22 +129,7 @@ const val footer = "    <footer style=\"text-align:center\">\n" +
         "    </footer>"
 
 
-fun openPdf(context: Context, file: File) {
-    val uri = FileProvider.getUriForFile(context, "com.srabbijan.dailycost.xmlToPdf.provider", file)
-    val intent = Intent(Intent.ACTION_VIEW).apply {
-        setDataAndType(uri, "application/pdf")
-        addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-    }
-    try {
-        context.startActivity(intent)
-    } catch (e: Exception) {
-        Toast.makeText(
-            context, "Error opening PDF: ${e.message}", Toast.LENGTH_SHORT
-        ).show()
-    }
 
-}
 
 data class PdfGeneration(
     val name: String,
@@ -212,6 +192,14 @@ fun itemBody(items: List<PdfGeneration>) :String{
                 "                <td class=\"price\">${it.amount}</td>\n" +
                 "            </tr>\n"
     }
+//    for (i in 1 .. 1000){
+//        stringBuilder += "            <tr>\n" +
+//                "                <td>TestName$i</td>\n" +
+//                "                <td>TestType$i</td>\n" +
+//                "                <td>TestName$i</td>\n" +
+//                "                <td class=\"price\">TestName$i</td>\n" +
+//                "            </tr>\n"
+//    }
     return stringBuilder
 }
 
